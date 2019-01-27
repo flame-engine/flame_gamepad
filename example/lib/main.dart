@@ -20,11 +20,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initPlatformState();
 
-   FlameGamepad.setListener((String evtType, String key) {
-     setState(() {
-       _lastEvent = evtType + " " + key;
-     });
-   });
+    FlameGamepad()
+      ..setListener((String evtType, String key) {
+        setState(() {
+          _lastEvent = evtType + " " + key;
+        });
+      });
   }
 
   Future<void> initPlatformState() async {
