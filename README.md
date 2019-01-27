@@ -4,6 +4,15 @@
 
 # Checking if the gamepad is connected
 
+```dart
+    bool isConnected;
+    try {
+      isConnected = await FlameGamepad.isGamepadConnected;
+    } on PlatformException {
+      isConnected = false;
+    }
+```
+
 # Listening to events
 To listen to gamepad events use the 'Flame.gamepad' instance, to add a listener use following snippet.
 
