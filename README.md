@@ -1,6 +1,6 @@
 # flame_gamepad
 
-## Gamepad is only support on Android at the moment.
+## Gamepad is only supported on Android at the moment.
 
 # Checking if the gamepad is connected
 
