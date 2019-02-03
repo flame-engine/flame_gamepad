@@ -30,6 +30,8 @@ public class FlameGamepadPlugin implements MethodCallHandler {
           return;
         }
       }
+
+      result.success(false);
     } else {
       result.notImplemented();
     }
