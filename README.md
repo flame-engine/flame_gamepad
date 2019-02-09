@@ -18,7 +18,7 @@ To listen to gamepad events use the 'Flame.gamepad' instance, to add a listener 
 
 ```dart
   var gamepad = FlameGamepad()
-    ...addListener((String evtType, String key) {
+    ...setListener((String evtType, String key) {
       print(key)
       if (evtType == GAMEPAD_BUTTON_UP) {
         print('is up')
