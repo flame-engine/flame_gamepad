@@ -17,15 +17,14 @@
 To listen to gamepad events use the 'Flame.gamepad' instance, to add a listener use following snippet.
 
 ```dart
-  var gamepad = FlameGamepad()
-    ...setListener((String evtType, String key) {
-      print(key)
-      if (evtType == GAMEPAD_BUTTON_UP) {
-        print('is up')
-      } else {
-        print('is down')
-      }
-    });
+  FlameGamepad.setListener((String evtType, String key) {
+    print(key)
+    if (evtType == GAMEPAD_BUTTON_UP) {
+      print('is up')
+    } else {
+      print('is down')
+    }
+  });
 ```
 
 To check for specific keys use the following constants avaiable flame_gamepad class

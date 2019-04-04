@@ -46,17 +46,36 @@ const ANDROID_MAPPING = {
 /// Gamepad functionalities
 ///
 class FlameGamepad {
-  KeyListener listener;
+  static KeyListener _listener;
+  static GamepadListener _gamepadListener;
+
+  static final MethodChannel _channel = const MethodChannel('xyz.fireslime/flame_gamepad');
 
   static Future<bool> get isGamepadConnected async {
     final bool isConnected = await _channel.invokeMethod('isGamepadConnected');
     return isConnected;
   }
 
-  static const MethodChannel _channel = const MethodChannel('flame_gamepad');
+  static final String lowercaseAlphabet = 'abcdefghijklmnopqrstuvwxyz';
+  static final String uppercaseAlphabet = lowercaseAlphabet.toUpperCase();
+  static final Map<String, int> lowercaseLettersFrom = _processAlphabet(lowercaseAlphabet, 29);
+  static final Map<String, int> uppercaseLettersFrom = _processAlphabet(uppercaseAlphabet, 54);
+  static final Map<String, int> lettersFrom = {}..addAll(lowercaseLettersFrom)..addAll(uppercaseLettersFrom);
+  static final Map<int, String> lettersTo = Map.fromEntries(lettersFrom.entries.map((e) => MapEntry(e.value, e.key)));
 
-  void setListener(GamepadListener gamepadListener) {
-    listener = (RawKeyEvent e) {
+  static Map<String, int> _processAlphabet(String alphabet, int start) {
+    return Map.fromEntries(alphabet.split('').asMap().entries.map((e) => MapEntry(e.value, e.key + start)));
+  }
+
+  static int keyCodeForChar(String char) => lettersFrom[char];
+
+  static String charForKeyCode(int keyCode) => lettersTo[keyCode];
+ 
+  static void setListener(GamepadListener gamepadListener) {
+    _channel.setMethodCallHandler(platformCallHandler);
+
+    _gamepadListener = gamepadListener;
+    _listener = (RawKeyEvent e) {
       String evtType =
           e is RawKeyDownEvent ? GAMEPAD_BUTTON_DOWN : GAMEPAD_BUTTON_UP;
 
@@ -70,11 +89,27 @@ class FlameGamepad {
       }
     };
 
-    RawKeyboard.instance.addListener(listener);
+    RawKeyboard.instance.addListener(_listener);
   }
 
   void removeListener() {
-    RawKeyboard.instance.removeListener(listener);
+    RawKeyboard.instance.removeListener(_listener);
+  }
+
+  static void handleKeyPress(String eventType, int keyCode) {
+    _gamepadListener(eventType, charForKeyCode(keyCode));
+  }
+
+  static Future<void> platformCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case 'flame_gamepad.key_event':
+        String eventType = (call.arguments as Map)['eventType'];
+        int keyCode = (call.arguments as Map)['keyCode'];
+        handleKeyPress(eventType, keyCode);
+      break;
+      default:
+        print('Unknown method: ${call.method}');
+        break;
+    }
   }
 }
-
