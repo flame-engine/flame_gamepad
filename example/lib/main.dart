@@ -28,10 +28,14 @@ class _MyAppState extends State<MyApp> {
       });
   }
 
+  Future<bool> checkIsConnected() async {
+    return await FlameGamepad.isGamepadConnected;
+  }
+
   Future<void> initPlatformState() async {
     bool isConnected;
     try {
-      isConnected = await FlameGamepad.isGamepadConnected;
+      isConnected = await checkIsConnected();
     } on PlatformException {
       isConnected = false;
     }
@@ -58,6 +62,15 @@ class _MyAppState extends State<MyApp> {
             children: [
               Text('Is connected on: $_isConnected\n'),
               Text(_lastEvent),
+              RaisedButton(
+                  child: Text("Try connection again"),
+                  onPressed: () async {
+                    final isConnected = await checkIsConnected();
+                    setState(() {
+                      _isConnected = isConnected;
+                    });
+                  }
+              ),
             ]
           )
         ),
