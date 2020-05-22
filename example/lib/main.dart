@@ -58,18 +58,22 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-            child: Column(children: [
-          Text('Is connected on: $_isConnected\n'),
-          Text(_lastEvent),
-          RaisedButton(
-              child: Text("Try connection again"),
-              onPressed: () async {
-                final isConnected = await checkIsConnected();
-                setState(() {
-                  _isConnected = isConnected;
-                });
-              }),
-        ])),
+          child: Column(
+            children: [
+              Text('Is connected on: $_isConnected\n'),
+              Text(_lastEvent),
+              RaisedButton(
+                child: Text('Try connection again'),
+                onPressed: () async {
+                  final isConnected = await checkIsConnected();
+                  setState(() {
+                    _isConnected = isConnected;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
