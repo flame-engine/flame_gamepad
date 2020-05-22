@@ -57,13 +57,13 @@ class FlameGamepad {
 
   void setListener(GamepadListener gamepadListener) {
     listener = (RawKeyEvent e) {
-      String evtType =
+      final evtType =
           e is RawKeyDownEvent ? GAMEPAD_BUTTON_DOWN : GAMEPAD_BUTTON_UP;
 
       if (e.data is RawKeyEventDataAndroid) {
-        RawKeyEventDataAndroid androidEvent = e.data as RawKeyEventDataAndroid;
+        final androidEvent = e.data as RawKeyEventDataAndroid;
 
-        String key = ANDROID_MAPPING[androidEvent.keyCode];
+        final String key = ANDROID_MAPPING[androidEvent.keyCode];
         if (key != null) {
           gamepadListener(evtType, key);
         }
