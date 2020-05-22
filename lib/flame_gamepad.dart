@@ -77,4 +77,3 @@ class FlameGamepad {
     RawKeyboard.instance.removeListener(listener);
   }
 }
-
