@@ -63,16 +63,16 @@ class _MyAppState extends State<MyApp> {
               Text('Is connected on: $_isConnected\n'),
               Text(_lastEvent),
               RaisedButton(
-                  child: Text("Try connection again"),
-                  onPressed: () async {
-                    final isConnected = await checkIsConnected();
-                    setState(() {
-                      _isConnected = isConnected;
-                    });
-                  }
+                child: Text('Try connection again'),
+                onPressed: () async {
+                  final isConnected = await checkIsConnected();
+                  setState(() {
+                    _isConnected = isConnected;
+                  });
+                },
               ),
-            ]
-          )
+            ],
+          ),
         ),
       ),
     );
