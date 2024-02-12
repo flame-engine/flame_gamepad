@@ -1,3 +1,5 @@
+⚠️ This is deprecated. Please use [Gamepads](https://github.com/flame-engine/gamepads/) instead.
+
 # flame_gamepad
 
 ## Gamepad is only supported on Android at the moment.
